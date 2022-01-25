@@ -15,7 +15,9 @@ class _InputPageState extends State<InputPage> {
 
   Color maleCardColor = inActiveCardColor;
   Color femaleCardColor = inActiveCardColor;
-  double height = 0;
+  double height = 50;
+  int weight = 50;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -98,18 +100,27 @@ class _InputPageState extends State<InputPage> {
                                 ),
                               ],
                             ),
-                            Slider(
-                              value: height,
-                              min: 0,
-                              max: 300,
-                              label: '${height.round()}',
-                              activeColor: Color(0xFFEB1555),
-                              inactiveColor: Color(0xFF8D8E98),
-                              onChanged: (double value) {
-                                setState(() {
-                                  height = value;
-                                });
-                              },
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                  thumbColor: Color(0xFFEB1555),
+                                  activeTrackColor: Color(0xD0FFFFFF),
+                                  overlayColor: Color(0x29EB1555),
+                                  thumbShape: RoundSliderThumbShape(
+                                      enabledThumbRadius: 13),
+                                  overlayShape: RoundSliderOverlayShape(
+                                      overlayRadius: 25)),
+                              child: Slider(
+                                value: height,
+                                min: 50,
+                                max: 300,
+                                label: '${height.round()}',
+                                inactiveColor: Color(0xFF8D8E98),
+                                onChanged: (double value) {
+                                  setState(() {
+                                    height = value;
+                                  });
+                                },
+                              ),
                             )
                           ],
                         ),
@@ -124,9 +135,89 @@ class _InputPageState extends State<InputPage> {
                   children: [
                     ReusableCard(
                       color: cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Weight',
+                              style: customLabelStyle,
+                            ),
+                            Text(
+                              '${weight.round()}',
+                              style: customNumberStyle,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: (){
+                                    setState(() {
+                                      weight+=1;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: (){
+                                    setState(() {
+                                      weight-=1;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     ReusableCard(
                       color: cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Age',
+                              style: customLabelStyle,
+                            ),
+                            Text(
+                              '${age.round()}',
+                              style: customNumberStyle,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: (){
+                                    setState(() {
+                                      age+=1;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: (){
+                                    setState(() {
+                                      age-=1;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -136,11 +227,39 @@ class _InputPageState extends State<InputPage> {
                 margin: EdgeInsets.only(top: 10),
                 width: double.infinity,
                 height: bottomHeight,
+                child: Center(
+                  child: Text(
+                    'Calculate Your BMI',
+                    style: TextStyle(
+                      color: Color(0xFFF3D7E1),
+                      fontSize: 24
+                    ),
+                  ),
+                ),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  RoundIconButton({this.icon, this.onPressed});
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: () {
+        if (this.onPressed != null) onPressed();
+      },
+      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
+      shape: CircleBorder(),
+      fillColor: Color(0xff4c4f5e),
+      elevation: 6.0,
     );
   }
 }
