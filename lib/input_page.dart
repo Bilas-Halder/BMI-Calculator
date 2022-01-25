@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'genderContent.dart';
-
-const cardColor = Color(0xFF1D1E33);
-const bottomHeight = 80.0;
-const textColor = Color(0xff8d8e98);
+import 'reusableCard.dart';
+import 'constants.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -12,6 +11,12 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  int c = 0;
+
+  Color maleCardColor = inActiveCardColor;
+  Color femaleCardColor = inActiveCardColor;
+  double height = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,26 +29,90 @@ class _InputPageState extends State<InputPage> {
         padding: EdgeInsets.only(top: 0),
         child: Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 flex: 3,
                 child: Row(
                   children: [
-                    Card(
-                      color: cardColor,
+                    ReusableCard(
+                      color: maleCardColor,
                       child: GenderContent(
                         icon: FontAwesomeIcons.mars,
                         label: 'MALE',
                       ),
-                      callback: (){
-                        print('pressed');
+                      onPressed: () {
+                        setState(() {
+                          maleCardColor = (maleCardColor != cardColor)
+                              ? cardColor
+                              : inActiveCardColor;
+                          femaleCardColor = inActiveCardColor;
+                        });
                       },
                     ),
-                    Card(
-                      color: cardColor,
+                    ReusableCard(
+                      color: femaleCardColor,
                       child: GenderContent(
                         icon: FontAwesomeIcons.venus,
                         label: 'FEMALE',
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          femaleCardColor = (femaleCardColor != cardColor)
+                              ? cardColor
+                              : inActiveCardColor;
+                          maleCardColor = inActiveCardColor;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Row(
+                  children: [
+                    ReusableCard(
+                      color: cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Height',
+                              style: customLabelStyle,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children: [
+                                Text(
+                                  '${height.round()}',
+                                  style: customNumberStyle,
+                                ),
+                                Text(
+                                  'Cm',
+                                  style: customLabelStyle,
+                                ),
+                              ],
+                            ),
+                            Slider(
+                              value: height,
+                              min: 0,
+                              max: 300,
+                              label: '${height.round()}',
+                              activeColor: Color(0xFFEB1555),
+                              inactiveColor: Color(0xFF8D8E98),
+                              onChanged: (double value) {
+                                setState(() {
+                                  height = value;
+                                });
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -53,20 +122,10 @@ class _InputPageState extends State<InputPage> {
                 flex: 3,
                 child: Row(
                   children: [
-                    Card(
+                    ReusableCard(
                       color: cardColor,
                     ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Row(
-                  children: [
-                    Card(
-                      color: cardColor,
-                    ),
-                    Card(
+                    ReusableCard(
                       color: cardColor,
                     ),
                   ],
@@ -80,37 +139,6 @@ class _InputPageState extends State<InputPage> {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Card extends StatelessWidget {
-  final Color color;
-  final Widget child;
-  final void Function() callback;
-  //constructor
-  Card({@required this.color, this.child, this.callback });
-
-  Function getOnTap(){
-    print(callback);
-    if(callback==null)return () {};
-    else return callback;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: getOnTap,
-        child: Container(
-          margin: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: this.child,
         ),
       ),
     );
