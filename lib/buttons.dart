@@ -23,3 +23,23 @@ class BottomButton extends StatelessWidget {
     );
   }
 }
+
+
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+  RoundIconButton({this.icon, this.onPressed});
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(icon),
+      onPressed: () {
+        if (this.onPressed != null) onPressed();
+      },
+      constraints: BoxConstraints.tightFor(width: 48.0, height: 48.0),
+      shape: CircleBorder(),
+      fillColor: Color(0xff4c4f5e),
+      elevation: 6.0,
+    );
+  }
+}

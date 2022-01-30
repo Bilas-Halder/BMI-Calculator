@@ -2,61 +2,70 @@ import 'package:flutter/material.dart';
 import 'buttons.dart';
 import 'constants.dart';
 import 'reusableCard.dart';
+import 'main_calculator.dart';
 
 class ResultsPage extends StatelessWidget {
+  final weight;
+  final height;
+  ResultsPage({this.height,this.weight});
+
   @override
   Widget build(BuildContext context) {
+    CalculateBMI bmi = CalculateBMI(height: height,weight: weight);
+
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Color(0xFF0A0E21),
         shadowColor: Color(0xFF272741),
-        title: Center(child: Text('BMI CALCULATOR       ')),
+        title: Text('BMI CALCULATOR'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                'Your Result',
-                style: customNumberStyle,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 20,left: 20,right: 10),
+            child: Text(
+              'Your Result',
+              style: customNumberStyle,
+            ),
+          ),
+          Expanded(
+            child: ReusableCard(
+              color: cardColor,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    bmi.getResult(),
+                    style: resultTextStyle,
+                  ),
+                  Text(
+                    bmi.getBMI(),
+                    style: bigResultTextStyle,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      bmi.getInterpretation(),
+                      style: resultTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              child: ReusableCard(
-                color: cardColor,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'OverWeight',
-                      style: resultTextStyle,
-                    ),
-                    Text(
-                      '21.5',
-                      style: bigResultTextStyle,
-                    ),
-                    Text(
-                      'Your Bmi Is Good',
-                      style: resultTextStyle,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          ),
 
-            GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: BottomButton(title: 'Re-Calculate',),
-            ),
-          ],
-        ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: BottomButton(title: 'Re-Calculate',),
+          ),
+        ],
       ),
     );
   }

@@ -10,7 +10,7 @@ const customLabelStyle = TextStyle(
     color: textColor
 );
 const customNumberStyle = TextStyle(
-    fontSize: 50,
+    fontSize: 40,
     color: Colors.white,
   fontWeight: FontWeight.bold
 );

@@ -107,9 +107,9 @@ class _InputPageState extends State<InputPage> {
                                   activeTrackColor: Color(0xD0FFFFFF),
                                   overlayColor: Color(0x29EB1555),
                                   thumbShape: RoundSliderThumbShape(
-                                      enabledThumbRadius: 13),
+                                      enabledThumbRadius: 12),
                                   overlayShape: RoundSliderOverlayShape(
-                                      overlayRadius: 25)),
+                                      overlayRadius: 22)),
                               child: Slider(
                                 value: height,
                                 min: 50,
@@ -227,7 +227,7 @@ class _InputPageState extends State<InputPage> {
                 onTap: (){
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context)=> ResultsPage())
+                    MaterialPageRoute(builder: (context)=> ResultsPage(height: height.toInt(),weight: weight,))
                   );
                 },
                 child: BottomButton(title: 'Calculate Your BMI',),
@@ -236,26 +236,6 @@ class _InputPageState extends State<InputPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-
-class RoundIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
-  RoundIconButton({this.icon, this.onPressed});
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: () {
-        if (this.onPressed != null) onPressed();
-      },
-      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
-      shape: CircleBorder(),
-      fillColor: Color(0xff4c4f5e),
-      elevation: 6.0,
     );
   }
 }

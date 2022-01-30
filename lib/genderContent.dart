@@ -14,7 +14,7 @@ class GenderContent extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 90,
+          size: 75,
         ),
         SizedBox(
           height: 15,
