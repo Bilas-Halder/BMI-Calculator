@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'genderContent.dart';
 import 'reusableCard.dart';
 import 'constants.dart';
+import 'result_page.dart';
+import 'buttons.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -222,20 +223,14 @@ class _InputPageState extends State<InputPage> {
                   ],
                 ),
               ),
-              Container(
-                color: Color(0xFFEB1555),
-                margin: EdgeInsets.only(top: 10),
-                width: double.infinity,
-                height: bottomHeight,
-                child: Center(
-                  child: Text(
-                    'Calculate Your BMI',
-                    style: TextStyle(
-                      color: Color(0xFFF3D7E1),
-                      fontSize: 24
-                    ),
-                  ),
-                ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=> ResultsPage())
+                  );
+                },
+                child: BottomButton(title: 'Calculate Your BMI',),
               )
             ],
           ),
@@ -244,6 +239,7 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
+
 
 class RoundIconButton extends StatelessWidget {
   final IconData icon;

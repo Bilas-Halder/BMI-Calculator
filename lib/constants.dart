@@ -14,3 +14,13 @@ const customNumberStyle = TextStyle(
     color: Colors.white,
   fontWeight: FontWeight.bold
 );
+const resultTextStyle = TextStyle(
+    fontSize: 22,
+    color: Color(0xff24d876),
+    fontWeight: FontWeight.bold,
+);
+const bigResultTextStyle = TextStyle(
+    fontSize: 96,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+);
